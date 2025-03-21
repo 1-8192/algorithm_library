@@ -1,2 +1,2 @@
 # algorithm_library
-Repo of algo solutions
+Repository of algo solutions in various languages.
