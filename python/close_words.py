@@ -39,3 +39,17 @@
 #     1 <= word1.length, word2.length <= 105
 #     word1 and word2 contain only lowercase English letters.
 
+from collections import Counter
+
+class Solution:
+    def closeStrings(self, word1: str, word2: str) -> bool:
+        if len(word1) != len(word2):
+            return False
+    
+        freq1 = Counter(word1)
+        freq2 = Counter(word2)
+
+        if set(freq1.keys()) != set(freq2.keys()):
+            return False
+    
+        return sorted(freq1.values()) == sorted(freq2.values())
