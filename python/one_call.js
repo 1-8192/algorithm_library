@@ -35,14 +35,13 @@
  * @return {Function}
  */
 var once = function(fn) {
-    let calls = 0
+    let called = false
 
     return function(...args){
-        if (calls == 0) {
-            calls ++
+        if (!called) {
+            called = true
             return fn(...args)
         } 
-        calls ++
         return undefined
     }
 };
