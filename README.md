@@ -1,2 +1,3 @@
 # algorithm_library
-Repository of algo solutions in various languages.
+
+Repository of algorithm solutions in various languages meant as a study tool.
