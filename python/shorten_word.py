@@ -5,7 +5,7 @@
 # accessibility -> a11y
 # Test this -> t3t t2s
 
-def shorten_word(word):
+def shorten_word(word=None):
     if word == None:
         return ""
     
@@ -13,6 +13,7 @@ def shorten_word(word):
     results = []
 
     for i in words:
+        i = i.lower()
         if len(i) < 3:
             results.append(i)
         else:
@@ -22,3 +23,5 @@ def shorten_word(word):
 
 print(shorten_word("accessibility")) # a11y
 print(shorten_word("Test this")) # t3t t2s
+print(shorten_word("")) # ""
+print(shorten_word(None)) # ""
