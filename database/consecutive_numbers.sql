@@ -42,3 +42,16 @@
 -- +-----------------+
 -- Explanation: 1 is the only number that appears consecutively for at least three times.
 
+--PSQL
+WITH ConsecutiveRuns AS (
+    SELECT 
+        num,
+        id,
+        id - ROW_NUMBER() OVER (PARTITION BY num ORDER BY id) AS grp
+    FROM 
+        Logs
+)
+SELECT DISTINCT num AS ConsecutiveNums
+FROM ConsecutiveRuns
+GROUP BY num, grp
+HAVING COUNT(*) >= 3;
