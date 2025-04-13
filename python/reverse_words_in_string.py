@@ -42,3 +42,25 @@ class Solution:
         reverse_array = [" ".join(word.split()) for word in reverse_array]
 
         return " ".join(reverse_array)
+    
+    def reverseWordsInPlace(self, s: str) -> str:
+        # Split the string by spaces and filter out empty strings
+        words = [word for word in s.split() if word]
+    
+        # Reverse the order of words
+        words.reverse()
+    
+        # Join the words with a single space
+        return " ".join(words)
+    
+    # Test cases
+    test_cases = [
+    "the sky is blue",
+    "  hello world  ",
+    "a good   example"
+    ]
+
+    for test in test_cases:
+        print(f"Input: '{test}'")
+        print(f"Output: '{reverseWords(test)}'")
+        print()
