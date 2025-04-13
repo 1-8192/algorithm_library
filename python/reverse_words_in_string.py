@@ -30,3 +30,15 @@
 #     There is at least one word in s.
 
 # Follow-up: If the string data type is mutable in your language, can you solve it in-place with O(1) extra space?
+
+class Solution:
+    def reverseWords(self, s: str) -> str:
+        word_array = s.split()
+        reverse_array = []
+
+        for word in word_array:
+            reverse_array.insert(0, word)
+        
+        reverse_array = [" ".join(word.split()) for word in reverse_array]
+
+        return " ".join(reverse_array)
