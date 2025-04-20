@@ -53,3 +53,108 @@ class Solution:
     
         # If we've gone through all of t and haven't matched all of s
         return i == len(s)
+    
+    # Test with the examples
+    print(isSubsequence("abc", "ahbgdc"))  # Expected: True
+    print(isSubsequence("axc", "ahbgdc"))  # Expected: False
+
+    # More complex approach to handle array of strings to check.
+    def preprocessString(t: str) -> dict:
+        """
+        Preprocess string t by creating a dictionary that maps each character
+        to an array of its positions in the string.
+    
+        Args:
+            t: The source string
+    
+        Returns:
+            A dictionary where keys are characters and values are lists of positions
+        """
+        char_indices = {}
+        for i, char in enumerate(t):
+            if char not in char_indices:
+                char_indices[char] = []
+            char_indices[char].append(i)
+        return char_indices
+
+    def isSubsequenceOptimized(s: str, char_indices: dict) -> bool:
+        """
+        Check if string s is a subsequence using preprocessed character indices.
+    
+        Args:
+            s: The potential subsequence string
+            char_indices: The preprocessed dictionary mapping characters to their positions
+    
+        Returns:
+            True if s is a subsequence, False otherwise
+        """
+        if not s:
+            return True
+    
+        curr_pos = -1  # Current position in t
+    
+        for char in s:
+            # If character doesn't exist in t, s cannot be a subsequence
+            if char not in char_indices:
+                return False
+        
+            # Find the next position of this character that's after curr_pos
+            indices = char_indices[char]
+            idx = binary_search(indices, curr_pos)
+        
+            # If no valid position found, s cannot be a subsequence
+            if idx == len(indices):
+                return False
+        
+            # Update current position to this found position
+            curr_pos = indices[idx]
+    
+        return True
+
+    def binary_search(arr, target):
+        """
+        Binary search to find the first position in arr that is > target
+    
+        Args:
+            arr: Sorted array of indices
+            target: The position to search for
+    
+        Returns:
+            The index of the first element > target, or len(arr) if none exists
+        """
+        left, right = 0, len(arr)
+    
+        while left < right:
+            mid = (left + right) // 2
+            if arr[mid] <= target:
+                left = mid + 1
+            else:
+                right = mid
+    
+        return left
+
+    # Example usage for the follow-up scenario 
+    def checkManySubsequences(t: str, subsequences: list) -> list:
+        """
+        Check multiple strings against the same target string t
+    
+        Args:
+            t: The source string
+            subsequences: List of strings to check
+    
+        Returns:
+            List of booleans indicating if each string is a subsequence
+        """
+        char_indices = preprocessString(t)
+        results = []
+    
+        for s in subsequences:
+            results.append(isSubsequenceOptimized(s, char_indices))
+    
+        return results
+
+    # Example
+    t = "ahbgdc"
+    subsequences = ["abc", "axc", "ahbgdc", ""]
+    results = checkManySubsequences(t, subsequences)
+    print(results)  # Expected: [True, False, True, True]
