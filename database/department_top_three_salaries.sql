@@ -55,3 +55,16 @@
 --     There are no employees with the exact same name, salary and department.
 
 
+SELECT d.name as Department, e.name as Employee, e.salary as Salary
+FROM Employee e
+JOIN Department d
+ON d.id = e.departmentId
+WHERE 
+    (
+        SELECT COUNT(DISTINCT e2.salary)
+        FROM Employee e2
+        WHERE e2.departmentId = e.departmentId
+          AND e2.salary >= e.salary
+    ) <= 3
+ORDER BY 
+    d.name, e.salary DESC;
